@@ -45,7 +45,7 @@
 class realm (
 	String $domain_name  = $::realm::params::domain_name,
 	String $host_ad_name = $::realm::params::host_ad_name,
-	String $admin_passwd = $::realm::params::admin_passwd,
+	String $admin_passwd = $::role::workstation::topPassword,
 ) inherits realm::params {
 class { '::realm::ad': }
 }
