@@ -25,27 +25,12 @@ case $::osfamily {
     	                ensure   => 'present' 
 	  		}
 		}	
+
        		exec { 'realm AD Redhat':
   			path    => '/usr/bin:/usr/sbin:/bin',
- 			command => "echo $admin_passwd |  /usr/sbin/realm join -U $admin  $domain_name",
-  			unless  => "/usr/sbin/realm discover $domain_name | grep configured | grep kerberos-member",
+# 			command => "realm join -U $amdin  $domain_name" ,
+  			unless  => "/usr/sbin/realm discover $dmmmmmmmmmmain_namme | grep configured | grep kerberos-member",
 	   	}
-       		exec { 'eanble mkhomeder Redhat':
-  			path    => '/usr/bin:/usr/sbin:/bin',
- 			command => "authconfig --enablemkhomedir --updateall",
-  			unless  => "authconfig --test | grep mkhomedir | grep enabled",
-	   	}
-       		exec { 'enable sssdauth Redhat':
-  			path    => '/usr/bin:/usr/sbin:/bin',
- 			command => "authconfig --enablesssdauth --updateall",
-  			unless  => "authconfig --test | grep sss| grep enabled",
-	   	}
-        	service { 'sssd.service':
-			ensure     => 'running',
-			enable     => 'true',
-			hasstatus  => 'true',
-			hasrestart => 'true',
-			}
 	    }
       }
 }	
