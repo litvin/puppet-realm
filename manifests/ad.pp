@@ -30,7 +30,7 @@ case $::osfamily {
  			command => "echo $admin_passwd |  /usr/sbin/realm join -U $admin  $domain_name",
   			unless  => "/usr/sbin/realm discover $domain_name | grep configured | grep kerberos-member",
 	   	}
-       		exec { 'eanble mkhomeder Redhat':
+       		exec { 'eanble mkhomedir Redhat':
   			path    => '/usr/bin:/usr/sbin:/bin',
  			command => "authconfig --enablemkhomedir --updateall",
   			unless  => "authconfig --test | grep mkhomedir | grep enabled",
