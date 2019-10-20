@@ -43,10 +43,15 @@
 # Copyright 2019 Your name here, unless otherwise noted.
 #
 class realm (
-	String $domain_name  = $::realm::params::domain_name,
-	String $host_ad_name = $::realm::params::host_ad_name,
-#	String $admin_passwd = $::role::workstation::topPassword,
-	String $admin_passwd = $::realm::params::admin_passwd,
+	String $domain_name         = $::realm::params::domain_name,
+	String $host_ad_name        = $::realm::params::host_ad_name,
+#	String $admin_passwd        = $::role::workstation::topPassword,
+	String $admin_passwd        = $::realm::params::admin_passwd,
+	String $admin               = $::realm::params::admin,
+        Array[String] $package_name = $::realm::params::package_name,
+
 ) inherits realm::params {
-class { '::realm::ad': }
+
+contain realm::ad
+
 }

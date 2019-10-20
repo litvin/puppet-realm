@@ -27,25 +27,30 @@ case $::osfamily {
 		}	
        		exec { 'realm AD Redhat':
   			path    => '/usr/bin:/usr/sbin:/bin',
- 			command => "echo $admin_passwd |  /usr/sbin/realm join -U $admin  $domain_name",
+ 			command => "echo '$admin_passwd' |  /usr/sbin/realm join -U $admin  $domain_name",
   			unless  => "/usr/sbin/realm discover $domain_name | grep configured | grep kerberos-member",
 	   	}
        		exec { 'eanble mkhomedir Redhat':
   			path    => '/usr/bin:/usr/sbin:/bin',
  			command => "authconfig --enablemkhomedir --updateall",
-  			unless  => "authconfig --test | grep mkhomedir | grep enabled",
+			unless  => "authselect current | grep with-mkhomedir"
+#  			unless  => "authconfig --test | grep mkhomedir | grep enabled",
 	   	}
+
        		exec { 'enable sssdauth Redhat':
   			path    => '/usr/bin:/usr/sbin:/bin',
- 			command => "authconfig --enablesssdauth --updateall",
-  			unless  => "authconfig --test | grep sss| grep enabled",
+			command => "systemctl enable sssd ",
+			unless  => "systemctl status sssd | grep enable",
+# 			command => "authconfig --enablesssdauth --updateall",
+#			unless  => "authconfig --test | grep sss| grep enabled",
 	   	}
-        	service { 'sssd.service':
-			ensure     => 'running',
-			enable     => 'true',
-			hasstatus  => 'true',
-			hasrestart => 'true',
-			}
+
+#        	service { 'sssd.service':
+#			ensure     => 'running',
+#			enable     => 'true',
+#			hasstatus  => 'true',
+#			hasrestart => 'true',
+#			}
 	    }
       }
 }	
