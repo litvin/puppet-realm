@@ -43,6 +43,7 @@
 # Copyright 2019 Your name here, unless otherwise noted.
 #
 class realm (
+	String $workgroup           = $::realm::params::workgroup,
 	String $domain_name         = $::realm::params::domain_name,
 	String $host_ad_name        = $::realm::params::host_ad_name,
 #	String $admin_passwd        = $::role::workstation::topPassword,

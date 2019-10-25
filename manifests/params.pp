@@ -1,4 +1,5 @@
 class realm::params {
+	$workgroup    = 'IZ'
 	$domain_name  = ''	
 	$host_ad_name = ''
 	$admin_passwd = ''
