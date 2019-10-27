@@ -24,13 +24,13 @@ case $::osfamily {
     	                ensure   => 'present' 
 	  		}
 		}
- 		file { "/etc/samba/smb.conf":
-	 	        ensure => file,
-		        owner  => 0,
-		        group  => 0,
-	                mode   => "644",
-		        content => template("$module_name/redos.smb.conf.erb"),
-	        }
+# 		file { "/etc/samba/smb.conf":
+#	 	        ensure => file,
+#		        owner  => 0,
+#		        group  => 0,
+#	                mode   => "644",
+#		        content => template("$module_name/redos.smb.conf.erb"),
+#	        }
        		exec { 'realm AD Redhat':
   			path    => '/usr/bin:/usr/sbin:/bin',
  			command => "echo '$admin_passwd' |  /usr/sbin/realm join -U $admin  $domain_name",
@@ -41,8 +41,15 @@ case $::osfamily {
                         owner  => 0,
                         group  => 0,
                         mode   => "600",
-			content =>  template("$module_name/redos.sssd.conf.erb"), 
+ 			content =>  template("$module_name/redos.sssd.conf.erb"), 
 	        }
+                file { "/etc/krb5.conf":
+                       ensure => file,
+                       owner  => 0,
+                       group  => 0,
+                       mode   => "644",
+                       content => template("$module_name/redos.krb5.conf.erb"),
+                }
        		exec { 'eanble mkhomedir Redhat':
   			path    => '/usr/bin:/usr/sbin:/bin',
  			command => "authconfig --enablemkhomedir --updateall",
